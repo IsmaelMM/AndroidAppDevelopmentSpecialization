@@ -1,5 +1,6 @@
 package mooc.vandy.java4android.birthdayprob.logic;
 
+import java.util.Arrays;
 import java.util.Random;
 
 import mooc.vandy.java4android.birthdayprob.ui.OutputInterface;
@@ -10,16 +11,15 @@ import mooc.vandy.java4android.birthdayprob.ui.OutputInterface;
  * The assignments are designed this way to simplify your early Android interactions.
  * Designing the assignments this way allows you to first learn key 'Java' features without
  * having to beforehand learn the complexities of Android.
- *
  */
-public class Logic 
-       implements LogicInterface {
+public class Logic
+        implements LogicInterface {
     /**
      * This is a String to be used in Logging (if/when you decide you
      * need it for debugging).
      */
     public static final String TAG =
-        Logic.class.getName();
+            Logic.class.getName();
 
     /**
      * This is the variable that stores our OutputInterface instance.
@@ -30,7 +30,7 @@ public class Logic
      * It is called 'mOut' because it is where we 'out-put' our
      * results. (It is also the 'in-put' from where we get values
      * from, but it only needs 1 name, and 'mOut' is good enough).
-    */
+     */
     OutputInterface mOut;
 
     /**
@@ -39,7 +39,7 @@ public class Logic
      * It assigns the passed in [MainActivity] instance
      * (which implements [OutputInterface]) to 'out'
      */
-    public Logic(OutputInterface out){
+    public Logic(OutputInterface out) {
         mOut = out;
     }
 
@@ -76,7 +76,40 @@ public class Logic
      */
     public double calculate(int size, int count) {
         // TODO -- add your code here
+        Integer[] birthdays = new Integer[size];
+        int sussesfull = 0;
+
+        for (int numSimulation = 1; numSimulation <= count; numSimulation++) {
+            initBirthdays(birthdays, numSimulation);
+
+            if (testBirthdays(birthdays))
+                sussesfull++;
+        }
+
+        return (sussesfull * 100.0) / count;
 
     }
-    // TODO - add your code here
+
+    // TODO -- add your code here
+    //
+    // Initialize the birthday array with random numbers,
+    // we pass the simulation number to initialize the seed
+    public void initBirthdays(Integer[] birthdays, int count) {
+        Random rnd = new Random(count);
+
+        for (int i = 0; i < birthdays.length; i++)
+            birthdays[i] = rnd.nextInt(365);
+    }
+
+    public Boolean testBirthdays(Integer[] birthdays) {
+        // We sort the array
+        Arrays.sort(birthdays);
+
+        // Once ordered we only have to check that two consecutive positions are equal
+        for (int i = 0; i < birthdays.length - 1; i++)
+            if (birthdays[i].equals(birthdays[i + 1]))
+                return Boolean.TRUE;
+
+        return Boolean.FALSE;
+    }
 }
