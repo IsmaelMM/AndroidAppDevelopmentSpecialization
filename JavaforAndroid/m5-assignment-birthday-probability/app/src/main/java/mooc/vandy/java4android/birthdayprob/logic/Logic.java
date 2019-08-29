@@ -101,6 +101,7 @@ public class Logic
             birthdays[i] = rnd.nextInt(365);
     }
 
+
     public Boolean testBirthdays(Integer[] birthdays) {
         // We sort the array
         Arrays.sort(birthdays);
@@ -112,4 +113,5 @@ public class Logic
 
         return Boolean.FALSE;
     }
+
 }
